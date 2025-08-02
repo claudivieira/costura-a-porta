@@ -1,7 +1,7 @@
 'use client';
 import React from "react";
 
-const RequestService = () => {
+export default function RequestService() {
     return (
         <a 
             className="text-primary border-1 border-primary rounded-lg px-10 content-center h-14"
@@ -12,5 +12,3 @@ const RequestService = () => {
         </a>
     )
 }
-
-export default RequestService;
