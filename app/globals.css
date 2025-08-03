@@ -2,21 +2,41 @@
 
 :root {
   --background: #ffffff;
-  --primary: #1a425f;
-  --secondary: #f2c45a;
+  --foreground: #171717;
+  --primary: #1A425F;
+  --secondary: #F2C45A;
 }
 
 @theme inline {
-  --color-*: initial;
   --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-secondary: var(--secondary);
-  --font-sans: var(--font-montserrat);
+  --shadow-soft: 0 4px 20px hsl(203 61% 18% / .1);
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --background: #1A425F;
+    --foreground: #ffffff;
+    --primary: #1A425F;
+    --secondary: #F2C45A;
+  }
+} */
+
+@layer utilities{
+  .textCard {
+    @apply flex items-start gap-2 pl-[20px] p-[30px] border-l-4 border-l-primary shadow-(--shadow-soft) rounded-md;
+  }
+
+  .textCardTitle {
+    @apply ml-2 mb-[20px] text-2xl font-bold;
+  }
 }
 
 body {
   background: var(--background);
-  color: var(--primary);
-  font-family: Montserrat, Helvetica, sans-serif;
-  font-weight: 400;
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
 }

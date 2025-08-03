@@ -1,16 +1,15 @@
-'use client';
-import React from "react";
+import React from 'react'
 
-const RequestService = () => {
-    return (
-        <a 
-            className="text-primary border-1 border-primary rounded-lg px-10 content-center h-14"
+const RequestServiceBtn = () => {
+  return (
+    <a 
+            className="text-primary border-1 border-primary rounded-lg px-6 content-center h-10 uppercase text-[14px]"
             href="https://wa.link/1v15kn"
             target="_blank"
         >
             Pedir Arranjo
         </a>
-    )
+  )
 }
 
-export default RequestService;
+export default RequestServiceBtn
