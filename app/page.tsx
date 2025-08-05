@@ -2,6 +2,7 @@ import Image from "next/image";
 import RequestService from "./components/RequestServiceBtn";
 import { BsExclamationCircle, BsCheck2Circle } from "react-icons/bs";
 import IconCardComponent from "./components/IconCardComponent";
+import Testimonials from "./components/Testimonials";
 
 const benefits = [
   {
@@ -36,8 +37,16 @@ const benefits = [
   },
 ]
 
-
-
+const testimonials = [
+  {
+    name: "Maria G.",
+    testimonial: "Só para dizer que adorei o serviço e gostei muito do cuidado da entrega com os tecidos excedentes 🙏🏻"
+  },
+  {
+    name: "Cátia R.",
+    testimonial: "Mega feliz 🥰 As calças ficaram bem já experimentei também eheheh"
+  }
+]
 
 export default function Home() {
   return (
@@ -114,6 +123,15 @@ export default function Home() {
             )
           } )}
           </div>
+        </section>
+        <section className="py-15 px-6 lg:px-8 text-center bg-gradient-to-br from-white to-secondary-warmer">
+          {testimonials && testimonials.map((testimonial, index) => {
+            return (
+              <div key={index}>
+                <Testimonials name={testimonial.name} testimonial={testimonial.testimonial} />
+              </div>
+            )
+          })}
         </section>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">

@@ -16,7 +16,7 @@ const IconCardComponent = ({ iconName, title, subtitle }: IconCardProps) => {
         <>
             <div className='p-3 bg-gray-200 rounded-full'>
                 <Icon size={25} strokeWidth={0.3} />
-                </div>
+            </div>
             <h3 className='text-xl font-semibold py-2'>{title}</h3>
             <p className='text-center'>{subtitle}</p>
         </>
