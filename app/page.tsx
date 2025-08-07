@@ -37,6 +37,30 @@ const benefits = [
   },
 ]
 
+const howItWorks = [
+  {
+    number: "01",
+    color: "#1A425F",
+    icon:"BsChat",
+    title: "Contacte-nos",
+    subtitle: "Contacte-nos pelo WhatsApp para agendar a recolha ou entrega da peça no atelier."
+  },
+  {
+    number: "02",
+    color: "#efd9c6",
+    icon:"BsGear",
+    title: "Realizamos o Ajuste",
+    subtitle: "Realizamos o ajuste com atualizações regulares sobre o estado da peça."
+  },
+  {
+    number: "03",
+    color: "#F2C45A",
+    icon:"BsBox",
+    title: "Entregamos",
+    subtitle: "Entregamos a peça ajustada na sua casa ou no atelier, conforme preferir."
+  },
+]
+
 const testimonials = [
   {
     name: "Maria G.",
@@ -44,7 +68,7 @@ const testimonials = [
   },
   {
     name: "Cátia R.",
-    testimonial: "Mega feliz 🥰 As calças ficaram bem já experimentei também eheheh"
+    testimonial: "Mega feliz 🥰 As calças ficaram bem já experimentei também"
   }
 ]
 
@@ -124,7 +148,36 @@ export default function Home() {
           } )}
           </div>
         </section>
-        <section className="py-15 px-6 lg:px-8 text-center bg-gradient-to-br from-white to-secondary-warmer">
+        <section className="py-15 px-6 lg:px-8 text-center">
+          <div className="my-10">
+          <h1 className="text-3xl font-bold uppercase">
+              Como Funciona
+          </h1>
+
+          <h3 className="mt-4 text-xl text-primary-lighter">
+            Um processo simples em três passos para ter as suas roupas perfeitas
+          </h3>
+          </div>
+          <div className="grid lg:grid-cols-3 lg:gap-6">
+            {howItWorks && howItWorks.map((work, index) => {
+              return (
+                <div 
+                  key={index}
+                  className="bg-white mt-8 p-[30px] justify-items-center relative"
+                >
+                  <IconCardComponent 
+                    number={work.number}
+                    color={work.color}
+                    iconName={work.icon} 
+                    title={work.title}
+                    subtitle={work.subtitle}
+                  />
+                </div>
+              )
+            })}
+          </div>
+        </section>
+        <section className="py-15 px-6 lg:px-8 text-center bg-gradient-to-br from-white to-secondary-warmer grid lg:grid-cols-2 lg:gap-6">
           {testimonials && testimonials.map((testimonial, index) => {
             return (
               <div key={index}>
