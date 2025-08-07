@@ -8,8 +8,8 @@ type TestimonialsProps = {
 
 const Testimonials = ({name, testimonial}: TestimonialsProps) => {
   return (
-    <div className='grid lg:grid-cols-3 justify-items-center bg-white mt-8 p-[30px] rounded-md'>
-        <div className='p-3 bg-gray-200 rounded-full py-4'>
+    <div className='justify-items-center bg-white mt-8 p-[30px] rounded-md min-h-[325px]'>
+        <div className='p-3 bg-gray-200 rounded-full'>
             <BsQuote size={25} strokeWidth={0.3} />
         </div>
         <div className='flex flex-row py-4'>
