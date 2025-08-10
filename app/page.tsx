@@ -88,13 +88,37 @@ export default function Home() {
                   priority
                 />
             </div>
-              <RequestService />
+              <RequestService extraStyles="border-primary text-primary text-[14px]" />
           </div>
         </div>
       </header>
       <main className="mx-auto">
-        <section className="bg-primary">
-          HERO
+        <section className="relative min-h-screen flex items-center bg-primary overflow-hidden py-15">
+          <div className="absolute inset-0">
+          <Image
+            className="w-full h-full object-cover opacity-20"
+            src="/roman-spiridonov-qI9H5nyhrV8-unsplash.jpg"
+            alt="Costura"
+            width={4000}
+            height={2000}
+            priority
+          />
+          <div className="absolute inset-0 bg-(image:--gradient-hero) opacity-80"></div>
+          </div>
+          <div className="relative z-10 container mx-auto px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto text-center">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight tracking-wide uppercase">
+                Costura À Porta
+              </h1>
+              <h2 className="text-xl md:text-2xl lg:text-3xl text-white/90 mb-4 font-light">
+                Costura ao Domicílio no Porto e Arredores
+              </h2> 
+              <p className="text-lg md:text-xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed">
+                Ajustes rápidos, personalizados e sem deslocações. Conveniência e qualidade diretamente na sua casa.
+              </p>
+              <RequestService extraStyles="border-secondary text-primary bg-secondary p-6 px-8 text-lg font-semibold shadow-warm transform transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary motion-reduce:transition-none motion-reduce:transform-none" />
+            </div>
+          </div>
         </section>
         <section className="py-15">
           <ul className="px-6 lg:px-8 lg:flex lg:flex-row lg:items-start">
