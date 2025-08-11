@@ -1,6 +1,6 @@
 import Image from "next/image";
 import RequestService from "./components/RequestServiceBtn";
-import { BsExclamationCircle, BsCheck2Circle } from "react-icons/bs";
+import { BsExclamationCircle, BsCheck2Circle, BsStars, BsTelephone, BsEnvelope, BsGeoAlt } from "react-icons/bs";
 import IconCardComponent from "./components/IconCardComponent";
 import Testimonials from "./components/Testimonials";
 
@@ -93,17 +93,17 @@ export default function Home() {
         </div>
       </header>
       <main className="mx-auto">
-        <section className="relative min-h-screen flex items-center bg-primary overflow-hidden py-15">
+        <section className="relative min-h-screen flex items-center bg-primary overflow-hidden py-15 bg-(image:--gradient-hero)">
           <div className="absolute inset-0">
-          <Image
-            className="w-full h-full object-cover opacity-20"
-            src="/roman-spiridonov-qI9H5nyhrV8-unsplash.jpg"
-            alt="Costura"
-            width={4000}
-            height={2000}
-            priority
-          />
-          <div className="absolute inset-0 bg-(image:--gradient-hero) opacity-80"></div>
+            <Image
+              className="w-full h-full object-cover opacity-20"
+              src="/roman-spiridonov-qI9H5nyhrV8-unsplash.jpg"
+              alt="Costura"
+              width={4000}
+              height={2000}
+              priority
+            />
+            <div className="absolute inset-0 opacity-80 bg-gradient-hero"></div>
           </div>
           <div className="relative z-10 container mx-auto px-6 lg:px-8">
             <div className="max-w-4xl mx-auto text-center">
@@ -116,7 +116,7 @@ export default function Home() {
               <p className="text-lg md:text-xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed">
                 Ajustes rápidos, personalizados e sem deslocações. Conveniência e qualidade diretamente na sua casa.
               </p>
-              <RequestService extraStyles="border-secondary text-primary bg-secondary p-6 px-8 text-lg font-semibold shadow-warm transform transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary motion-reduce:transition-none motion-reduce:transform-none" />
+              <RequestService extraStyles="border-secondary text-primary bg-secondary p-6 px-8 text-lg font-semibold shadow-warm transform transition-transform duration-300 hover:scale-105 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary motion-reduce:transition-none motion-reduce:transform-none" />
             </div>
           </div>
         </section>
@@ -132,7 +132,7 @@ export default function Home() {
               </div>
             
             </li>
-            <li className="textCard sm:mt-15 lg:mt-0 lg:ml-10 hover:bg-gradient-to-br from-white to-secondary-warmer">
+            <li className="textCard mt-15 lg:mt-0 lg:ml-15 hover:bg-gradient-to-br from-white to-secondary-warmer">
               <div className="p-3 bg-gray-200 rounded-full flex-shrink-0">
                 <BsCheck2Circle size={25} strokeWidth={0.3} />
               </div>
@@ -211,8 +211,74 @@ export default function Home() {
           })}
         </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
+      <footer className="flex flex-col py-15 pt-20 flex-wrap bg-primary px-6 lg:px-8 text-white">
+        <div className="flex flex-col items-center justify-center text-center">
+          <div className="p-3 bg-gray-200/20 rounded-full">
+          <BsStars size={50} strokeWidth={0.3} />
+          </div>
+          <div className="mt-8">
+            <h1 className="text-4xl font-bold">PRONTO PARA TER AS SUAS ROUPAS PERFEITAS SEM SAIR DE CASA?</h1>
+            <h2 className="text-xl my-8 text-white/80">Transformar roupa é transformar como se sente. Cada ponto é pensado com carinho.</h2>
+            <RequestService extraStyles="border-secondary text-primary bg-secondary p-6 px-16 text-lg font-semibold shadow-warm transform transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary motion-reduce:transition-none motion-reduce:transform-none" />
+            <p className="text-white/70 block my-8">Feito à medida de quem veste histórias</p>
+          </div>
+        </div>
         
+        <div className="mt-16 md:flex md:gap-14">
+          <div className="md:flex md:flex-col md:1/3">
+            <Image
+              className="items-left h-12 w-auto md:w-24"
+              src="/logo_deitado_branco_sem-fundo.png"
+              alt="Costura À Porta logo"
+              width={180}
+              height={18}
+              priority
+            />
+            <p className="text-white/70 block my-2 text-base">Cada ponto é pensado com carinho para transformar como se sente.</p>
+          </div>
+          <div className="py-10 md:pt-0 md:flex-nowrap md:flex-1/3">
+            <h3 className="uppercase text-xl font-bold mb-5">Contacto</h3>
+            <div className="flex gap-3 text-base">
+              <BsTelephone size={18} strokeWidth={0.3} className="text-secondary/60" /> 
+              <a 
+                className="text-md"
+                href="https://wa.me/351928253235"
+                target="_blank"
+                rel="noopener noreferrer">
+                  +351 928 253 235
+              </a>
+            </div>
+            <div className="flex gap-3 mt-2">
+              <BsEnvelope size={18} strokeWidth={0.3} className="text-secondary/60" /> 
+              <a 
+                className="text-base"
+                href="mailto:geral@costuraaporta.pt"
+                target="_blank"
+                rel="noopener noreferrer">
+                  geral@costuraaporta.pt
+              </a>
+            </div>
+            <div className="flex gap-3 mt-2">
+              <BsGeoAlt size={18} strokeWidth={0.3} className="text-secondary/60" /> 
+              <p className="text-base">Porto e Arredores</p> 
+            </div>
+          </div>
+          <div className="pb-10 md:flex-nowrap md:flex-1/3">
+            <h3 className="uppercase text-xl font-bold mb-5">Serviços</h3>
+            <div>
+              <ul className="list-disc px-3 marker:text-xs">
+                <li className="text-base">Ajustes de vestuário</li>
+                <li className="text-base">Transformações</li>
+                <li className="text-base">Costura personalizada</li>
+                <li className="text-base">Serviço ao domicílio</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div>
+            <hr className="text-white/20 py-3" />
+            <p className="text-white/60 text-sm text-center">© 2025 Costura à Porta. Todos os direitos reservados.</p>
+          </div>
       </footer>
     </div>
   );

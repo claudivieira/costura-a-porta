@@ -16,8 +16,8 @@
   --color-secondary: var(--secondary);
   --color-primary-lighter: var(--primary-lighter);
   --color-secondary-warmer: var(--secondary-warmer);
-  --shadow-soft: 0 4px 20px hsl(203 61% 18% / .1);
-  --gradient-hero: linear-gradient(135deg, hsl(203 61% 18%), hsl(203 45% 25%));
+  --gradient-hero: linear-gradient(135deg, #1a425f, #0c2536);
+  --shadow-soft: 0 4px 20px hsl(203 61% 18% / 0.1);
 }
 
 /* @media (prefers-color-scheme: dark) {
@@ -43,8 +43,11 @@
   }
 
   .shadow-warm {
-    transition: box-shadow 0.3s ease, transform 0.3s ease;
     box-shadow: 0 14px 20px #efd9c630, 0 3px 6px #00000015;
+  }
+
+  .bg-gradient-hero {
+    background-image: var(--gradient-hero);
   }
 }
 
