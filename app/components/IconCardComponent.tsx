@@ -1,18 +1,20 @@
 import React from 'react'
 import * as BsIcons from 'react-icons/bs';
+import { IconType } from 'react-icons';
 
+type BsIconName = keyof typeof BsIcons;
 
 type IconCardProps = {
     number?: string;
     color?: string;
-    iconName: string;
+    iconName: BsIconName;
     title: string;
     subtitle: string;
   };
 
 
 const IconCardComponent = ({ iconName, title, subtitle, number, color }: IconCardProps) => {
-    const Icon = (BsIcons as any)[iconName];
+    const Icon = BsIcons[iconName] as IconType;
 
     return (
         <>

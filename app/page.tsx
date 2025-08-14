@@ -3,9 +3,24 @@ import RequestService from "./components/RequestServiceBtn";
 import { BsExclamationCircle, BsCheck2Circle, BsStars, BsTelephone, BsEnvelope, BsGeoAlt } from "react-icons/bs";
 import IconCardComponent from "./components/IconCardComponent";
 import Testimonials from "./components/Testimonials";
-import { GoogleTagManager } from '@next/third-parties/google'
+import { GoogleTagManager } from '@next/third-parties/google';
+import * as BsIcons from 'react-icons/bs';
 
-const benefits = [
+type Benefit = {
+  icon: keyof typeof BsIcons;
+  title: string;
+  subtitle: string;
+};
+
+type Work = {
+  icon: keyof typeof BsIcons;
+  title: string;
+  subtitle: string;
+  number: string;
+  color: string;
+};
+
+const benefits: Benefit[] = [
   {
     icon:"BsClock",
     title: "Poupa Tempo e Esforço",
@@ -38,7 +53,7 @@ const benefits = [
   },
 ]
 
-const howItWorks = [
+const howItWorks: Work[] = [
   {
     number: "01",
     color: "#1A425F",

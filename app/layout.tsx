@@ -3,10 +3,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 
 
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["200", "400", "600", "700"]
-});
+const montserrat = Montserrat({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: "Costura À Porta - Arranjos de costura ao domicílio no Porto",

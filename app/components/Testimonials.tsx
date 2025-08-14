@@ -19,7 +19,7 @@ const Testimonials = ({name, testimonial}: TestimonialsProps) => {
             <BsFillStarFill size={20} strokeWidth={0.3} color='#f2c45a' />
             <BsFillStarFill size={20} strokeWidth={0.3} color='#f2c45a' />
         </div>
-        <p className='py-4 italic text-lg'>"{testimonial}"</p>
+        <p className='py-4 italic text-lg'>{`"${testimonial}"`}</p>
         <p className='pt-6 font-semibold text-base'>{name}</p>
     </div>
   )
