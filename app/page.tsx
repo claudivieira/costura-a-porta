@@ -3,6 +3,7 @@ import RequestService from "./components/RequestServiceBtn";
 import { BsExclamationCircle, BsCheck2Circle, BsStars, BsTelephone, BsEnvelope, BsGeoAlt } from "react-icons/bs";
 import IconCardComponent from "./components/IconCardComponent";
 import Testimonials from "./components/Testimonials";
+import { GoogleTagManager } from '@next/third-parties/google'
 
 const benefits = [
   {
@@ -74,7 +75,7 @@ const testimonials = [
 
 export default function Home() {
   return (
-    <div>
+    <>
       <header>
         <div className="mx-auto px-6 lg:px-8 bg-white">
           <div className="flex items-center justify-between">
@@ -88,7 +89,7 @@ export default function Home() {
                   priority
                 />
             </div>
-              <RequestService extraStyles="border-primary text-primary text-[14px]" />
+              <RequestService extraStyles="border-primary text-primary text-[14px]" placement='header' />
           </div>
         </div>
       </header>
@@ -116,7 +117,7 @@ export default function Home() {
               <p className="text-lg md:text-xl text-white/80 mb-12 max-w-3xl mx-auto leading-relaxed">
                 Ajustes rápidos, personalizados e sem deslocações. Conveniência e qualidade diretamente na sua casa.
               </p>
-              <RequestService extraStyles="border-secondary text-primary bg-secondary p-6 px-8 text-lg font-semibold shadow-warm transform transition-transform duration-300 hover:scale-105 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary motion-reduce:transition-none motion-reduce:transform-none" />
+              <RequestService extraStyles="border-secondary text-primary bg-secondary p-6 px-8 text-lg font-semibold shadow-warm transform transition-transform duration-300 hover:scale-105 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary motion-reduce:transition-none motion-reduce:transform-none" placement="hero" />
             </div>
           </div>
         </section>
@@ -219,7 +220,7 @@ export default function Home() {
           <div className="mt-8">
             <h1 className="text-4xl font-bold">PRONTO PARA TER AS SUAS ROUPAS PERFEITAS SEM SAIR DE CASA?</h1>
             <h2 className="text-xl my-8 text-white/80">Transformar roupa é transformar como se sente. Cada ponto é pensado com carinho.</h2>
-            <RequestService extraStyles="border-secondary text-primary bg-secondary p-6 px-16 text-lg font-semibold shadow-warm transform transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary motion-reduce:transition-none motion-reduce:transform-none" />
+            <RequestService extraStyles="border-secondary text-primary bg-secondary p-6 px-16 text-lg font-semibold shadow-warm transform transition-transform duration-300 hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-secondary motion-reduce:transition-none motion-reduce:transform-none" placement="footer" />
             <p className="text-white/70 block my-8">Feito à medida de quem veste histórias</p>
           </div>
         </div>
@@ -280,6 +281,7 @@ export default function Home() {
             <p className="text-white/60 text-sm text-center">© 2025 Costura à Porta. Todos os direitos reservados.</p>
           </div>
       </footer>
-    </div>
+      <GoogleTagManager gtmId="G-XVM1CYEQ42" />
+    </>
   );
 }
