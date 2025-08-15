@@ -20,6 +20,7 @@ export default function ConsentBanner() {
       functionality_storage: 'granted',
       security_storage: 'granted',
     });
+    window.dataLayer?.push({ event: 'consent_granted' });
     localStorage.setItem(LS_KEY, 'accepted');
     setVisible(false);
   };
