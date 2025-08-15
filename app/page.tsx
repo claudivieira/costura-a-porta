@@ -3,7 +3,6 @@ import RequestService from "./components/RequestServiceBtn";
 import { BsExclamationCircle, BsCheck2Circle, BsStars, BsTelephone, BsEnvelope, BsGeoAlt } from "react-icons/bs";
 import IconCardComponent from "./components/IconCardComponent";
 import Testimonials from "./components/Testimonials";
-import { GoogleTagManager } from '@next/third-parties/google';
 import * as BsIcons from 'react-icons/bs';
 
 type Benefit = {
@@ -296,7 +295,6 @@ export default function Home() {
             <p className="text-white/60 text-sm text-center">© 2025 Costura à Porta. Todos os direitos reservados.</p>
           </div>
       </footer>
-      <GoogleTagManager gtmId="GTM-5WGVCNFS" />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import "./globals.css";
-import { Analytics } from "@vercel/analytics/next";
+import { GoogleTagManager } from '@next/third-parties/google';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 
@@ -25,11 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <GoogleTagManager gtmId="GTM-5WGVCNFS" />
       <body
         className={montserrat.className}
       >
         {children}
-        <Analytics />
         <SpeedInsights />
       </body>
     </html>
