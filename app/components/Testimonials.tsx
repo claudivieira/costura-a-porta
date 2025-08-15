@@ -8,7 +8,7 @@ type TestimonialsProps = {
 
 const Testimonials = ({name, testimonial}: TestimonialsProps) => {
   return (
-    <div className='justify-items-center bg-white mt-8 p-[30px] rounded-md min-h-[325px]'>
+    <div className='grid place-items-center bg-white mt-8 p-8 rounded-md min-h-[325px]'>
         <div className='p-3 bg-gray-200 rounded-full'>
             <BsQuote size={25} strokeWidth={0.3} />
         </div>
