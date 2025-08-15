@@ -104,7 +104,7 @@ export default function Home() {
                   priority
                 />
             </div>
-              <RequestService extraStyles="border-primary text-primary text-[14px]" placement='header' />
+              <RequestService extraStyles="border-primary text-primary text-sm" placement='header' />
           </div>
         </div>
       </header>
@@ -176,7 +176,7 @@ export default function Home() {
             return (
               <div 
                 key={index}
-                className="bg-white mt-8 p-[30px] justify-items-center hover:bg-gradient-to-br from-white to-secondary-warmer"
+                className="bg-white mt-8 p-8 hover:bg-gradient-to-br from-white to-secondary-warmer grid place-items-center"
               >
                 <IconCardComponent 
                   iconName={benefit.icon} 
@@ -203,7 +203,7 @@ export default function Home() {
               return (
                 <div 
                   key={index}
-                  className="bg-white mt-8 p-[30px] justify-items-center relative"
+                  className="bg-white mt-8 p-8 relative grid place-items-center"
                 >
                   <IconCardComponent 
                     number={work.number}
