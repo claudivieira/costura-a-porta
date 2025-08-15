@@ -296,7 +296,7 @@ export default function Home() {
             <p className="text-white/60 text-sm text-center">© 2025 Costura à Porta. Todos os direitos reservados.</p>
           </div>
       </footer>
-      <GoogleTagManager gtmId="G-XVM1CYEQ42" />
+      <GoogleTagManager gtmId="GTM-5WGVCNFS" />
     </>
   );
 }
