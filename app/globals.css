@@ -39,7 +39,7 @@
   }
 
   .hero {
-    @apply bg-[url(https://unsplash.com/photos/person-sewing-using-sewing-machine-qI9H5nyhrV8)]
+    @apply bg-[url(/roman-spiridonov-qI9H5nyhrV8-unsplash.jpg)];
   }
 
   .shadow-warm {
@@ -57,4 +57,8 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   line-height: 32px;
+}
+
+html {
+  -webkit-text-size-adjust:100%
 }
