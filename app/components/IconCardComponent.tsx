@@ -14,7 +14,7 @@ type IconCardProps = {
 
 
 const IconCardComponent = ({ iconName, title, subtitle, number, color }: IconCardProps) => {
-    const Icon = BsIcons[iconName] as IconType;
+     const Icon = BsIcons[iconName] as IconType;
 
     return (
         <>
