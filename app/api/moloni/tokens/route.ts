@@ -24,10 +24,18 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json({ success: true })
-  } catch (err) {
-    console.error('🔥 Erro a guardar no Firebase:', err)
-    return NextResponse.json({ error: 'Erro Firebase' }, { status: 500 })
-  }
+  } catch (err: any) {
+    console.error('🔥 Erro a guardar no Firebase:', {
+        message: err?.message,
+        code: err?.code,
+        stack: err?.stack,
+        err,
+    })
+    return NextResponse.json(
+        { error: 'Erro Firebase', details: err?.message || err },
+        { status: 500 }
+    )
+    }
 }
 
 export async function GET() {
