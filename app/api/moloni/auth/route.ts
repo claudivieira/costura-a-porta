@@ -9,7 +9,14 @@ export async function GET(req: NextRequest) {
   if (!code) {
     return NextResponse.json({ error: 'Missing code' }, { status: 400 })
   }
-
+console.log('Received code:', code)
+console.log('Body being sent to Moloni:', {
+  grant_type: 'authorization_code',
+  client_id: process.env.MOLONI_CLIENT_ID,
+  client_secret: process.env.MOLONI_CLIENT_SECRET,
+  code,
+  redirect_uri: process.env.MOLONI_REDIRECT_URI,
+})
   try {
     const response = await fetch('https://api.moloni.pt/v1/grant/', {
       method: 'POST',
