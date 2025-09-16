@@ -27,15 +27,15 @@ export async function POST(req: NextRequest) {
     })
 
     return NextResponse.json({ success: true })
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const error = err instanceof Error ? err : new Error(String(err))
     console.error('🔥 Erro a guardar no Firebase:', {
-        message: err?.message,
-        code: err?.code,
-        stack: err?.stack,
-        err,
+        message: error?.message,
+        stack: error?.stack,
+        error,
     })
     return NextResponse.json(
-        { error: 'Erro Firebase', details: err?.message || err },
+        { error: 'Erro Firebase', details: error?.message || error },
         { status: 500 }
     )
     }
