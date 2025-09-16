@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
       { status: 400 }
     )
   }
-
+  
   try {
     await db.collection('moloni_tokens').doc('current').set({
       access_token,
