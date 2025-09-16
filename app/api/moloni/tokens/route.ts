@@ -1,19 +1,11 @@
 // app/api/moloni/tokens/route.ts
+import { NextRequest, NextResponse } from 'next/server'
+import { db } from '@/lib/firebaseAdmin'
 
 export const runtime = 'nodejs'
 
-import { NextRequest, NextResponse } from 'next/server'
-
-let storedTokens: {
-  access_token?: string
-  refresh_token?: string
-  expires_in?: number
-  received_at?: number
-} = {}
-
 export async function POST(req: NextRequest) {
   const body = await req.json()
-
   const { access_token, refresh_token, expires_in } = body
 
   if (!access_token || !refresh_token || !expires_in) {
@@ -23,18 +15,32 @@ export async function POST(req: NextRequest) {
     )
   }
 
-  storedTokens = {
-    access_token,
-    refresh_token,
-    expires_in,
-    received_at: Date.now()
+  try {
+    await db.collection('moloni_tokens').doc('current').set({
+      access_token,
+      refresh_token,
+      expires_in,
+      received_at: Date.now()
+    })
+
+    return NextResponse.json({ success: true })
+  } catch (err) {
+    console.error('🔥 Erro a guardar no Firebase:', err)
+    return NextResponse.json({ error: 'Erro Firebase' }, { status: 500 })
   }
-
-  console.log('✅ Tokens saved:', storedTokens)
-
-  return NextResponse.json({ success: true })
 }
 
 export async function GET() {
-  return NextResponse.json(storedTokens)
+  try {
+    const doc = await db.collection('moloni_tokens').doc('current').get()
+
+    if (!doc.exists) {
+      return NextResponse.json({})
+    }
+
+    return NextResponse.json(doc.data())
+  } catch (err) {
+    console.error('🔥 Erro a ler do Firebase:', err)
+    return NextResponse.json({ error: 'Erro Firebase' }, { status: 500 })
+  }
 }
