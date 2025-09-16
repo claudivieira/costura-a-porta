@@ -3,6 +3,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(req: NextRequest) {
+    console.log('req', req)
   const url = new URL(req.url)
   const code = url.searchParams.get('code')
 
