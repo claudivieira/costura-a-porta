@@ -1,6 +1,8 @@
 // app/api/moloni/tokens/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/lib/firebaseAdmin'
+import { Timestamp } from 'firebase-admin/firestore'
+
 
 export const runtime = 'nodejs'
 
@@ -14,13 +16,14 @@ export async function POST(req: NextRequest) {
       { status: 400 }
     )
   }
-  
+
   try {
     await db.collection('moloni_tokens').doc('current').set({
       access_token,
       refresh_token,
       expires_in,
-      received_at: Date.now()
+      received_at: Date.now(),
+      timestamp: Timestamp.now(),
     })
 
     return NextResponse.json({ success: true })
