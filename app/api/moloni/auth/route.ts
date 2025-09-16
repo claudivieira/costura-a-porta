@@ -41,6 +41,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: data }, { status: 400 })
     }
   } catch (error) {
-    return NextResponse.json({ error: 'Erro ao contactar Moloni' }, { status: 500 })
-  }
+        console.error('🔥 Erro ao contactar Moloni:', error)
+        return NextResponse.json({ error: 'Erro ao contactar Moloni', details: `${error}` }, { status: 500 })
+}
 }
