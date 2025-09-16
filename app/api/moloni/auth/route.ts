@@ -18,33 +18,30 @@ console.log('Body being sent to Moloni:', {
   code,
   redirect_uri: process.env.MOLONI_REDIRECT_URI,
 })
+
+
+  const params = new URLSearchParams({
+    grant_type: 'authorization_code',
+    client_id: process.env.MOLONI_CLIENT_ID!,
+    client_secret: process.env.MOLONI_CLIENT_SECRET!,
+    code,
+    redirect_uri: process.env.MOLONI_REDIRECT_URI!,
+  })
+
   try {
-    const response = await fetch('https://api.moloni.pt/v1/grant/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        grant_type: 'authorization_code',
-        client_id: process.env.MOLONI_CLIENT_ID!,
-        client_secret: process.env.MOLONI_CLIENT_SECRET!,
-        code,
-        redirect_uri: process.env.MOLONI_REDIRECT_URI!,
-      }).toString(),
-    })
+    const moloniResponse = await fetch(
+      `https://api.moloni.pt/v1/grant/?${params}`,
+      { method: 'GET' }
+    )
 
-    const tokens = await response.json()
+    const data = await moloniResponse.json()
 
-    if ('access_token' in tokens) {
-      // Aqui podes guardar os tokens numa DB ou devolver diretamente
-      return NextResponse.json({
-        success: true,
-        tokens,
-      })
+    if (data.access_token) {
+      return NextResponse.json({ success: true, tokens: data })
     } else {
-      return NextResponse.json({ error: tokens }, { status: 400 })
+      return NextResponse.json({ error: data }, { status: 400 })
     }
-  } catch (err) {
-    return NextResponse.json({ error: 'Erro no pedido ao Moloni' }, { status: 500 })
+  } catch (error) {
+    return NextResponse.json({ error: 'Erro ao contactar Moloni' }, { status: 500 })
   }
 }
