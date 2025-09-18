@@ -69,7 +69,7 @@ export default function Products() {
     }));
   };
 
-  if (isLoading) {
+    if (isLoading) {
     return <p className="text-center text-gray-500">A carregar arranjos...</p>;
   }
 

@@ -21,6 +21,7 @@ interface MoloniProduct {
 //   category_id: number
 // }
 
+
 export const runtime = 'nodejs'
 
 export async function GET() {
@@ -42,7 +43,6 @@ export async function GET() {
 
       return response
     }
-
     // 1. Buscar company_id
     const companiesRes = await fetch('https://api.moloni.pt/v1/companies/getAll/?access_token=' + access_token)
     const companies = await companiesRes.json()
