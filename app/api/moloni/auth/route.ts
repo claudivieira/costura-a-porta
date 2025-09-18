@@ -29,13 +29,12 @@ export async function GET(req: NextRequest) {
     return NextResponse.redirect('/')
   }
 
-  // Esperar cookies
-  const cookieStore = cookies()
-  const redirectTo = (await cookieStore.get('moloni_redirect'))?.value || '/'
+  // Esperar cookies (obrigatório com await em API routes)
+  const cookieStore = await cookies()
+  const redirectTo = cookieStore.get('moloni_redirect')?.value || '/'
 
   const response = NextResponse.redirect(redirectTo)
 
-  // Guardar token de forma segura
   response.cookies.set('moloni_access_token', tokenData.access_token, {
     httpOnly: true,
     secure: true,
@@ -44,7 +43,14 @@ export async function GET(req: NextRequest) {
     path: '/',
   })
 
-  // Limpar cookie temporário
+  response.cookies.set('moloni_refresh_token', tokenData.refresh_token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'lax',
+    maxAge: 60 * 60 * 24 * 30, // 30 dias
+    path: '/',
+  })
+
   response.cookies.delete('moloni_redirect')
 
   return response

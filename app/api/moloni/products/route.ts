@@ -1,8 +1,6 @@
 // app/api/moloni/products/route.ts
 import { NextResponse } from 'next/server'
 import { getValidToken } from '@/lib/moloni/getValidToken'
-import { redirect } from 'next/navigation'
-import { cookies } from 'next/headers'
 
 interface MoloniCategory {
   category_id: number
@@ -32,8 +30,9 @@ export async function GET() {
     if (!access_token) {
     const redirectUri = `https://api.moloni.pt/v1/authorize/?response_type=code&client_id=263814238&redirect_uri=https://costuraaporta.pt/api/moloni/auth`
 
-    // Guardar a página de origem
-    cookies().set('moloni_redirect', '/products', {
+    const response = NextResponse.redirect(redirectUri)
+
+    response.cookies.set('moloni_redirect', '/products', {
       path: '/',
       httpOnly: true,
       secure: true,
@@ -41,8 +40,8 @@ export async function GET() {
       maxAge: 300,
     })
 
-    redirect(redirectUri)
-  }
+      return response
+    }
 
     // 1. Buscar company_id
     const companiesRes = await fetch('https://api.moloni.pt/v1/companies/getAll/?access_token=' + access_token)

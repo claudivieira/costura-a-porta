@@ -27,10 +27,11 @@ export default function Products() {
         const res = await fetch('/api/moloni/products');
         const products: Product[] = await res.json();
 
+        // Agrupar por categoria
         const grouped: GroupedCategory[] = [];
 
         products.forEach((product) => {
-          if (product.category_name === 'Bolsas') return; // Ignorar "Bolsas"
+          if (product.category_name === 'Bolsas') return; // Filtrar "Bolsas"
 
           const existing = grouped.find(
             (group) => group.category_id === product.category_id
@@ -41,20 +42,18 @@ export default function Products() {
           } else {
             grouped.push({
               category_id: product.category_id,
-              category_name: product.category_name || 'Categoria sem nome',
+              category_name: product.category_name || 'Sem nome',
               products: [product],
             });
           }
         });
 
-        // Ordenar por ordem alfabética
-        grouped.sort((a, b) =>
-          a.category_name.localeCompare(b.category_name)
-        );
+        // Ordenar categorias por ordem alfabética
+        grouped.sort((a, b) => a.category_name.localeCompare(b.category_name));
 
         setCategories(grouped);
       } catch (error) {
-        console.error('Erro ao carregar artigos:', error);
+        console.error('Erro ao carregar produtos:', error);
       } finally {
         setIsLoading(false);
       }

@@ -7,20 +7,19 @@ export function middleware(request: NextRequest) {
 
   if (isProductsPage && !token) {
     const redirectUrl = new URL('https://api.moloni.pt/v1/authorize/')
-
     redirectUrl.searchParams.set('response_type', 'code')
     redirectUrl.searchParams.set('client_id', process.env.MOLONI_CLIENT_ID!)
     redirectUrl.searchParams.set('redirect_uri', 'https://costuraaporta.pt/api/moloni/auth')
 
-    // Criar resposta e guardar a página original no cookie
     const response = NextResponse.redirect(redirectUrl)
 
+    // Guarda página original que o utilizador queria visitar
     response.cookies.set('moloni_redirect', request.nextUrl.pathname, {
-      path: '/',
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
-      maxAge: 300, // 5 minutos
+      maxAge: 300,
+      path: '/',
     })
 
     return response
