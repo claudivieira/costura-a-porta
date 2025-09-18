@@ -14,12 +14,13 @@ interface MoloniProduct {
   category_id: number
 }
 
-interface Product {
-  product_id: number
-  name: string
-  price: number
-  category_id: number
-}
+// interface Product {
+//   product_id: number
+//   name: string
+//   price: number
+//   category_id: number
+// }
+
 
 export const runtime = 'nodejs'
 
@@ -27,6 +28,21 @@ export async function GET() {
   try {
     const access_token = await getValidToken()
 
+    if (!access_token) {
+    const redirectUri = `https://api.moloni.pt/v1/authorize/?response_type=code&client_id=263814238&redirect_uri=https://costuraaporta.pt/api/moloni/auth`
+
+    const response = NextResponse.redirect(redirectUri)
+
+    response.cookies.set('moloni_redirect', '/products', {
+      path: '/',
+      httpOnly: true,
+      secure: true,
+      sameSite: 'lax',
+      maxAge: 300,
+    })
+
+      return response
+    }
     // 1. Buscar company_id
     const companiesRes = await fetch('https://api.moloni.pt/v1/companies/getAll/?access_token=' + access_token)
     const companies = await companiesRes.json()

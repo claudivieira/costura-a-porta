@@ -27,10 +27,12 @@ export default function Products() {
         const res = await fetch('/api/moloni/products');
         const products: Product[] = await res.json();
 
-
+        // Agrupar por categoria
         const grouped: GroupedCategory[] = [];
 
         products.forEach((product) => {
+          if (product.category_name === 'Bolsas') return; // Filtrar "Bolsas"
+
           const existing = grouped.find(
             (group) => group.category_id === product.category_id
           );
@@ -40,15 +42,18 @@ export default function Products() {
           } else {
             grouped.push({
               category_id: product.category_id,
-              category_name: product.category_name || 'Categoria sem nome',
+              category_name: product.category_name || 'Sem nome',
               products: [product],
             });
           }
         });
 
+        // Ordenar categorias por ordem alfabética
+        grouped.sort((a, b) => a.category_name.localeCompare(b.category_name));
+
         setCategories(grouped);
       } catch (error) {
-        console.error('Erro ao carregar artigos:', error);
+        console.error('Erro ao carregar produtos:', error);
       } finally {
         setIsLoading(false);
       }
@@ -64,10 +69,8 @@ export default function Products() {
     }));
   };
 
-  if (isLoading) {
-    return (
-      <p className="text-center text-gray-500">A carregar arranjos...</p>
-    );
+    if (isLoading) {
+    return <p className="text-center text-gray-500">A carregar arranjos...</p>;
   }
 
   return (
@@ -76,7 +79,10 @@ export default function Products() {
 
       {categories.length > 0 ? (
         categories.map((group) => (
-          <div key={group.category_id} className="mb-4 border rounded-md shadow-sm">
+          <div
+            key={group.category_id}
+            className="mb-4 border rounded-md shadow-sm"
+          >
             <button
               onClick={() => toggleCategory(group.category_id)}
               className="w-full flex justify-between items-center p-4 bg-gray-100 hover:bg-gray-200 rounded-t-md"
