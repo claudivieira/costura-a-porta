@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import getValidToken from '@/lib/moloni/getValidToken'
+import { getValidMoloniToken } from '@/lib/moloni'
 
 
 interface MoloniCategory {
@@ -21,7 +21,7 @@ export const runtime = 'nodejs'
 
 export async function GET() {
   try {
-  const access_token = await getValidToken()
+  const access_token = await getValidMoloniToken()
 
   if (!access_token) throw new Error('Token inválido ou inexistente')
 

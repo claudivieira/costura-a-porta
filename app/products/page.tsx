@@ -7,13 +7,12 @@ import { useRouter } from 'next/navigation';
 export default function ProductsPage() {
 const router = useRouter();
 
-
 useEffect(() => {
   const token = localStorage.getItem('moloni_access_token');
 
 
   if (!token) {
-    const redirectUri = encodeURIComponent('https://costuraaporta.pt/api/moloni/store-token');
+    const redirectUri = encodeURIComponent('https://www.costuraaporta.pt/api/moloni/store-token');
     const clientId = '263814238';
 
 
