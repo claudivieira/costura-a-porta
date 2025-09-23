@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
 
   // Trocar o code por tokens
   const res = await fetch("https://api.moloni.pt/v1/grant/", {
-    method: "POST",
+    method: "GET",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       grant_type: "authorization_code",
