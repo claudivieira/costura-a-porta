@@ -3,24 +3,37 @@ import { db } from "@/lib/firebaseAdmin";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const access = searchParams.get("access_token");
-  const refresh = searchParams.get("refresh_token");
+  const code = searchParams.get("code");
 
-  if (!access || !refresh) {
-    return NextResponse.json(
-      { error: "Missing tokens in callback" },
-      { status: 400 }
-    );
+  if (!code) {
+    return NextResponse.json({ error: "Missing code in callback" }, { status: 400 });
   }
 
-  // Grava tokens no Firebase
-  await db.collection("moloni").doc("auth").set({
-    access_token: access,
-    refresh_token: refresh,
-    created_at: Date.now(),
-    expires_in: 7200, // ou vem no payload da Moloni
+  // Trocar o code por tokens
+  const res = await fetch("https://api.moloni.pt/v1/grant/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      grant_type: "authorization_code",
+      client_id: process.env.MOLONI_CLIENT_ID!,
+      client_secret: process.env.MOLONI_CLIENT_SECRET!,
+      redirect_uri: process.env.MOLONI_REDIRECT_URI!,
+      code,
+    }),
   });
 
-  // Redireciona para a página real
+  const data = await res.json();
+
+  if (!data.access_token) {
+    return NextResponse.json({ error: "Failed to exchange code", details: data }, { status: 400 });
+  }
+
+  await db.collection("moloni").doc("auth").set({
+    access_token: data.access_token,
+    refresh_token: data.refresh_token,
+    created_at: Date.now(),
+    expires_in: data.expires_in,
+  });
+
   return NextResponse.redirect(new URL("/products/real", req.url));
 }
