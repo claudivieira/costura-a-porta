@@ -9,20 +9,20 @@ const router = useRouter();
 
 
 useEffect(() => {
-const token = localStorage.getItem('moloni_access_token');
+  const token = localStorage.getItem('moloni_access_token');
 
 
-if (!token) {
-const redirectUri = encodeURIComponent('https://costuraaporta.pt/api/store-token');
-const clientId = '263814238';
+  if (!token) {
+    const redirectUri = encodeURIComponent('https://costuraaporta.pt/api/store-token');
+    const clientId = '263814238';
 
 
-window.location.href = `https://api.moloni.pt/v1/authorize/?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
-} else {
-router.push('/products/real');
-}
-}, []);
+    window.location.href = `https://api.moloni.pt/v1/authorize/?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
+  } else {
+    router.push('/products/real');
+  }
+  }, []);
 
 
-return <p>A redirecionar…</p>;
+  return <p>A redirecionar…</p>;
 }
