@@ -1,57 +1,39 @@
-// app/api/moloni/auth/route.ts
-import { cookies } from 'next/headers'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server';
+
 
 export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url)
-  const code = searchParams.get('code')
+const { searchParams } = new URL(req.url);
+const code = searchParams.get('code');
 
-  if (!code) {
-    return NextResponse.redirect('/')
-  }
 
-  // Trocar código por token
-  const tokenRes = await fetch('https://api.moloni.pt/v1/grant/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      grant_type: 'authorization_code',
-      code,
-      client_id: process.env.MOLONI_CLIENT_ID,
-      client_secret: process.env.MOLONI_CLIENT_SECRET,
-      redirect_uri: 'https://costuraaporta.pt/api/moloni/auth',
-    }),
-  })
+if (!code) {
+return NextResponse.redirect(new URL('/', req.url));
+}
 
-  const tokenData = await tokenRes.json()
 
-  if (!tokenData.access_token) {
-    return NextResponse.redirect('/')
-  }
+const tokenRes = await fetch('https://api.moloni.pt/v1/grant/', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+  grant_type: 'authorization_code',
+  code,
+  client_id: process.env.MOLONI_CLIENT_ID,
+  client_secret: process.env.MOLONI_CLIENT_SECRET,
+  redirect_uri: 'https://costuraaporta.pt/api/moloni/auth/',
+  }),
+});
 
-  // Esperar cookies (obrigatório com await em API routes)
-  const cookieStore = await cookies()
-  const redirectTo = cookieStore.get('moloni_redirect')?.value || '/'
 
-  const response = NextResponse.redirect(redirectTo)
+const data = await tokenRes.json();
 
-  response.cookies.set('moloni_access_token', tokenData.access_token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    maxAge: tokenData.expires_in || 3600,
-    path: '/',
-  })
 
-  response.cookies.set('moloni_refresh_token', tokenData.refresh_token, {
-    httpOnly: true,
-    secure: true,
-    sameSite: 'lax',
-    maxAge: 60 * 60 * 24 * 30, // 30 dias
-    path: '/',
-  })
+if (!data.access_token) {
+  return NextResponse.redirect(new URL('/erro', req.url));
+}
 
-  response.cookies.delete('moloni_redirect')
 
-  return response
+  const redirectTo = new URL('/products/store-token', req.url);
+  redirectTo.searchParams.set('access_token', data.access_token);
+  redirectTo.searchParams.set('refresh_token', data.refresh_token);
+  return NextResponse.redirect(redirectTo);
 }

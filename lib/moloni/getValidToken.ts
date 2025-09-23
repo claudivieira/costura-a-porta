@@ -1,67 +1,49 @@
-// lib/moloni.ts
-import { db } from '@/lib/firebaseAdmin'
-import { Timestamp } from 'firebase-admin/firestore'
+import { getFirestore } from "firebase-admin/firestore";
 
-const MOLONI_CLIENT_ID = process.env.MOLONI_CLIENT_ID!
-const MOLONI_CLIENT_SECRET = process.env.MOLONI_CLIENT_SECRET!
+const db = getFirestore();
 
-export async function getValidToken(): Promise<string> {
-  const docRef = db.collection('moloni_tokens').doc('current')
-  const doc = await docRef.get()
+async function getValidToken() {
+  const tokensRef = db.collection("moloni").doc("auth");
+  const tokensSnap = await tokensRef.get();
+  const tokens = tokensSnap.data();
 
-  if (!doc.exists) {
-    throw new Error('❌ Nenhum token encontrado no Firebase')
+  if (!tokens) throw new Error("No Moloni tokens saved");
+
+  const { access_token, refresh_token, created_at, expires_in } = tokens;
+
+  const isExpired = Date.now() > created_at + expires_in * 1000;
+
+  if (!isExpired) {
+    return access_token; // ✅ ainda válido
   }
 
-  const {
-    access_token,
-    refresh_token,
-    expires_in,
-    received_at
-  } = doc.data() as {
-    access_token: string
-    refresh_token: string
-    expires_in: number
-    received_at: number
-  }
-
-  const now = Date.now()
-  const expiresAt = received_at + expires_in * 1000
-  const isExpiredSoon = expiresAt - now < 5 * 60 * 1000 // 5 minutos
-
-  if (!isExpiredSoon) {
-    return access_token
-  }
-
-  // ⚠️ Está a expirar ou já expirou → Fazer refresh
-  const response = await fetch('https://api.moloni.pt/v1/grant/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  // 🚨 expirou → pedir novo
+  const res = await fetch("https://api.moloni.pt/v1/grant/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
-      grant_type: 'refresh_token',
-      client_id: MOLONI_CLIENT_ID,
-      client_secret: MOLONI_CLIENT_SECRET,
-      refresh_token
-    })
-  })
+      grant_type: "refresh_token",
+      client_id: process.env.MOLONI_CLIENT_ID!,
+      client_secret: process.env.MOLONI_CLIENT_SECRET!,
+      refresh_token,
+    }),
+  });
 
-  const data = await response.json()
+  const data = await res.json();
 
-  if (!response.ok || !data.access_token) {
-    console.error('❌ Erro ao fazer refresh do token:', data)
-    throw new Error('Erro ao renovar token da Moloni')
+  if (!data.access_token) {
+    throw new Error("Failed to refresh Moloni token: " + JSON.stringify(data));
   }
 
-  // Guardar novo token
-  await docRef.set({
+  // 🔄 atualizar no Firebase
+  await tokensRef.set({
     access_token: data.access_token,
     refresh_token: data.refresh_token,
+    created_at: Date.now(),
     expires_in: data.expires_in,
-    received_at: Date.now(),
-    timestamp: Timestamp.now()
-  })
+  });
 
-  console.log('✅ Token da Moloni atualizado com sucesso')
-
-  return data.access_token
+  return data.access_token;
 }
+
+export default getValidToken;
