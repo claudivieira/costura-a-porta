@@ -42,14 +42,14 @@ const existing = grouped.find(g => g.category_id === product.category_id);
 
 
 if (existing) {
-existing.products.push(product);
-} else {
-grouped.push({
-category_id: product.category_id,
-category_name: product.category_name || 'Sem nome',
-products: [product],
-});
-}
+        existing.products.push(product);
+    } else {
+        grouped.push({
+            category_id: product.category_id,
+            category_name: product.category_name || 'Sem nome',
+            products: [product],
+        });
+    }
 });
 
 
@@ -83,23 +83,23 @@ return (
 
 
 {categories.map((group) => (
-<div key={group.category_id} className="mb-4 border rounded-md shadow-sm">
-<button onClick={() => toggleCategory(group.category_id)} className="w-full p-4 bg-gray-100 hover:bg-gray-200">
-<span>{group.category_name}</span>
-<span>{expanded[group.category_id] ? '−' : '+'}</span>
-</button>
-{expanded[group.category_id] && (
-<ul className="divide-y">
-{group.products.map((product) => (
-<li key={product.product_id} className="p-4 flex justify-between">
-<span>{product.name}</span>
-<span>{product.price.toFixed(2)}€</span>
-</li>
-))}
-</ul>
-)}
-</div>
-))}
-</div>
-);
+    <div key={group.category_id} className="mb-4 border rounded-md shadow-sm">
+        <button onClick={() => toggleCategory(group.category_id)} className="w-full p-4 bg-gray-100 hover:bg-gray-200">
+            <span>{group.category_name}</span>
+            <span>{expanded[group.category_id] ? '−' : '+'}</span>
+        </button>
+        {expanded[group.category_id] && (
+            <ul className="divide-y">
+                {group.products.map((product) => (
+                    <li key={product.product_id} className="p-4 flex justify-between">
+                        <span>{product.name}</span>
+                        <span>{product.price.toFixed(2)}€</span>
+                    </li>
+                ))}
+            </ul>
+        )}
+        </div>
+        ))}
+    </div>
+    );
 }

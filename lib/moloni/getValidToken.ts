@@ -1,6 +1,4 @@
-import { getFirestore } from "firebase-admin/firestore";
-
-const db = getFirestore();
+import { db } from "../firebaseAdmin";
 
 async function getValidToken() {
   const tokensRef = db.collection("moloni").doc("auth");

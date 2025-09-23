@@ -13,7 +13,7 @@ const token = localStorage.getItem('moloni_access_token');
 
 
 if (!token) {
-const redirectUri = encodeURIComponent('https://f355e064a9c2.ngrok-free.app/api/moloni/auth');
+const redirectUri = encodeURIComponent('https://costuraaporta.pt/api/store-token');
 const clientId = '263814238';
 
 
