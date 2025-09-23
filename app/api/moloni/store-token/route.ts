@@ -9,7 +9,14 @@ export async function GET(req: NextRequest) {
   try {
     await exchangeCodeForTokens(code);
     return NextResponse.redirect(new URL("/products/real", req.url));
-  } catch (e: any) {
-    return NextResponse.json({ error: "Failed to exchange code", details: e.message }, { status: 400 });
+  } catch (e) {
+  let message = "Unknown error";
+  if (e instanceof Error) {
+    message = e.message;
   }
+  return NextResponse.json(
+    { error: "Failed to exchange code", details: message },
+    { status: 400 }
+  );
+}
 }
