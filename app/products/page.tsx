@@ -12,7 +12,7 @@ useEffect(() => {
 
 
   if (!token) {
-    const redirectUri = encodeURIComponent('https://www.costuraaporta.pt/api/moloni/store-token');
+    const redirectUri = encodeURIComponent('https://costuraaporta.pt/api/moloni/store-token');
     const clientId = '263814238';
 
 
