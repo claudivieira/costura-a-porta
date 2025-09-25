@@ -16,7 +16,10 @@ const RequestServiceBtn = ({ extraStyles, placement }: requestServiceBtnProps) =
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Pedir arranjo pelo WhatsApp"
-        onClick={() => sendGTMEvent({ event: 'buttonClicked', value: `Request Service ${placement}` })}
+        onClick={() => sendGTMEvent({
+          event: "requestService_button_click",
+          placement: `${placement}`
+        })}
     >
         Pedir Arranjo
     </a>
