@@ -12,14 +12,14 @@ return NextResponse.redirect(new URL('/', req.url));
 
 
 const tokenRes = await fetch('https://api.moloni.pt/v1/grant/', {
-  method: 'GET',
+  method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
   grant_type: 'authorization_code',
   code,
   client_id: process.env.MOLONI_CLIENT_ID,
   client_secret: process.env.MOLONI_CLIENT_SECRET,
-  redirect_uri: 'https://costuraaporta.pt/api/moloni/store-token',
+  redirect_uri: process.env.MOLONI_REDIRECT_URI,
   }),
 });
 

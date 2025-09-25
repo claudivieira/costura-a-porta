@@ -12,7 +12,7 @@ export async function exchangeCodeForTokens(code: string) {
 
   const res = await fetch(url.toString(), { method: "GET" });
   const data = await res.json();
-
+console.log('proc', process.env.MOLONI_REDIRECT_URI)
   if (!data.access_token) {
     throw new Error("Moloni exchange failed: " + JSON.stringify(data));
   }
