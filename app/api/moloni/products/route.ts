@@ -27,7 +27,7 @@ export async function GET() {
 
   const companiesRes = await fetch('https://api.moloni.pt/v1/companies/getAll/?access_token=' + access_token)
   const companies = await companiesRes.json()
-  const company_id = companies?.[0]?.company_id
+  const company_id = companies?.[1]?.company_id
   if (!company_id) throw new Error('❌ company_id não encontrado.')
 
 
@@ -40,12 +40,12 @@ export async function GET() {
   const categoriesBody = await categoriesRes.json()
 
   const categories: MoloniCategory[] = Array.isArray(categoriesBody)
-  ? categoriesBody
-  : categoriesBody?.data || categoriesBody?.categories || []
+    ? categoriesBody
+    : categoriesBody?.data || categoriesBody?.categories || []
 
   const filteredCategories = categories
-  .filter((cat) => cat.name.toLowerCase() !== 'bolsas')
-  .sort((a, b) => a.name.localeCompare(b.name))
+    .filter((cat) => cat.name.toLowerCase() !== 'bolsas')
+    .sort((a, b) => a.name.localeCompare(b.name))
 
   const allProducts = (
     await Promise.all(

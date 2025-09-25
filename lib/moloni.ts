@@ -1,4 +1,5 @@
 import { db } from "@/lib/firebaseAdmin";
+import { Timestamp } from 'firebase-admin/firestore'
 
 const GRANT_URL = "https://api.moloni.pt/v1/grant/";
 
@@ -12,7 +13,6 @@ export async function exchangeCodeForTokens(code: string) {
 
   const res = await fetch(url.toString(), { method: "GET" });
   const data = await res.json();
-console.log('proc', process.env.MOLONI_REDIRECT_URI)
   if (!data.access_token) {
     throw new Error("Moloni exchange failed: " + JSON.stringify(data));
   }
@@ -45,6 +45,7 @@ async function saveTokens(access_token: string, refresh_token: string, expires_i
     refresh_token,
     expires_in,
     created_at: Date.now(),
+    timestamp: Timestamp.now()
   });
 }
 
