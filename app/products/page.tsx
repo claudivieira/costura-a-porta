@@ -13,8 +13,7 @@ useEffect(() => {
 
   if (!token) {
     const redirectUri = encodeURIComponent('https://costuraaporta.pt/api/moloni/store-token');
-    const clientId = process.env.MOLONI_CLIENT_ID;
-console.log('clientID', clientId)
+    const clientId = process.env.NEXT_PUBLIC_MOLONI_CLIENT_ID;
 
     window.location.href = `https://api.moloni.pt/v1/authorize/?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
   } else {
