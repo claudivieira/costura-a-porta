@@ -12,7 +12,7 @@ export async function GET() {
   }
 
   const res = await fetch("https://api.moloni.pt/v1/grant/", {
-    method: "POST",
+    method: "GET",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
     body: new URLSearchParams({
       grant_type: "refresh_token",
