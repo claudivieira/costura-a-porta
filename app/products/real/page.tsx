@@ -78,28 +78,46 @@ if (isLoading) return <p className="text-center">A carregar arranjos...</p>;
 
 
 return (
-<div className="max-w-3xl mx-auto px-4 py-8">
+    <div className="max-w-3xl mx-auto px-4 py-8">
     <h1 className="text-2xl font-bold mb-6">Lista de Arranjos</h1>
 
 
-    {categories.map((group) => (
-        <div key={group.category_id} className="mb-4 border rounded-md shadow-sm">
-            <button onClick={() => toggleCategory(group.category_id)} className="w-full p-4 bg-gray-100 hover:bg-gray-200">
-                <span>{group.category_name}</span>
-                <span>{expanded[group.category_id] ? '−' : '+'}</span>
-            </button>
-            {expanded[group.category_id] && (
-                <ul className="divide-y">
+        {categories.length > 0 ? (
+            categories.map((group) => (
+            <div
+                key={group.category_id}
+                className="mb-4 border rounded-md shadow-sm"
+            >
+                <button
+                onClick={() => toggleCategory(group.category_id)}
+                className="w-full flex justify-between items-center p-4 bg-gray-100 hover:bg-gray-200 rounded-t-md"
+                >
+                <span className="font-semibold text-left">
+                    {group.category_name}
+                </span>
+                <span className="text-xl">
+                    {expanded[group.category_id] ? '−' : '+'}
+                </span>
+                </button>
+
+                {expanded[group.category_id] && (
+                <ul className="divide-y divide-gray-200">
                     {group.products.map((product) => (
-                        <li key={product.product_id} className="p-4 flex justify-between">
-                            <span>{product.name}</span>
-                            <span>{product.price.toFixed(2)}€</span>
-                        </li>
+                    <li
+                        key={`${group.category_id}-${product.product_id}`}
+                        className="p-4 flex justify-between items-center"
+                    >
+                        <span>{product.name}</span>
+                        <span>{product.price.toFixed(2)}€</span>
+                    </li>
                     ))}
                 </ul>
-            )}
+                )}
             </div>
-            ))}
+            ))
+        ) : (
+            <p className="text-center text-gray-500">Nenhum arranjo encontrado.</p>
+        )}
         </div>
-        );
+    );
 }
