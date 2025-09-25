@@ -1,77 +1,51 @@
-import { NextResponse } from 'next/server'
-import { getValidMoloniToken } from '@/lib/moloni'
+import { NextRequest, NextResponse } from "next/server";
+import { db } from "@/lib/firebaseAdmin";
 
-
-interface MoloniCategory {
-  category_id: number
-  name: string
-}
-
-
-interface MoloniProduct {
-  product_id: number
-  name: string
-  price: string
-  category_id: number
-}
-
-
-export const runtime = 'nodejs'
-
-
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-  const access_token = await getValidMoloniToken()
+    // 👉 buscar tokens guardados
+    const snap = await db.collection("moloni").doc("tokens").get();
+    const stored = snap.data();
 
-  if (!access_token) throw new Error('Token inválido ou inexistente')
+    if (!stored?.access_token) {
+      return NextResponse.json(
+        { error: "No access token available" },
+        { status: 401 }
+      );
+    }
 
-  const companiesRes = await fetch('https://api.moloni.pt/v1/companies/getAll/?access_token=' + access_token)
-  const companies = await companiesRes.json()
-  const company_id = companies?.[1]?.company_id
-  if (!company_id) throw new Error('❌ company_id não encontrado.')
+    // 👉 chamar Moloni com o access_token atual
+    const res = await fetch("https://api.moloni.pt/v1/products/getAll/?company_id=XXX", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${stored.access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        company_id: process.env.MOLONI_COMPANY_ID,
+      }),
+    });
 
+    if (res.status === 401) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-  const categoriesRes = await fetch(`https://api.moloni.pt/v1/productCategories/getAll/?access_token=${access_token}&json=true`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ company_id: Number(company_id), parent_id: 0 })
-  })
-
-  const categoriesBody = await categoriesRes.json()
-
-  const categories: MoloniCategory[] = Array.isArray(categoriesBody)
-    ? categoriesBody
-    : categoriesBody?.data || categoriesBody?.categories || []
-
-  const filteredCategories = categories
-    .filter((cat) => cat.name.toLowerCase() !== 'bolsas')
-    .sort((a, b) => a.name.localeCompare(b.name))
-
-  const allProducts = (
-    await Promise.all(
-    filteredCategories.map(async (cat) => {
-      const prodRes = await fetch(`https://api.moloni.pt/v1/products/getAll/?access_token=${access_token}&json=true`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ company_id, category_id: cat.category_id, with_invisible: 0, qty: 50 })
-  })
-
-  const products: MoloniProduct[] = await prodRes.json()
-    return products.map((p) => ({
-        product_id: p.product_id,
-        name: p.name,
-        price: parseFloat(p.price),
-        category_id: p.category_id,
-        category_name: cat.name
-      }))
-      })
-    )
-  ).flat()
-
-    return NextResponse.json(allProducts)
+    const products = await res.json();
+    return NextResponse.json(products);
   } catch (err: unknown) {
-    const error = err instanceof Error ? err.message : 'Erro desconhecido'
-    console.error('🔥 Erro a obter artigos:', err)
-    return NextResponse.json({ error: 'Erro ao obter artigos', details: error }, { status: 500 })
+    let details = "Unknown error";
+
+    if (err instanceof Error) {
+      details = err.message;
+    } else if (typeof err === "string") {
+      details = err;
+    } else if (typeof err === "object") {
+      details = JSON.stringify(err);
+    }
+
+    return NextResponse.json(
+      { error: "Unexpected error", details },
+      { status: 500 }
+    );
   }
 }

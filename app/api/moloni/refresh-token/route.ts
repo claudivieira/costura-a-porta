@@ -3,40 +3,34 @@ import { db } from "@/lib/firebaseAdmin";
 
 export async function GET(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url);
-    const code = searchParams.get("code");
+    const snap = await db.collection("moloni").doc("tokens").get();
+    const stored = snap.data();
 
-    if (!code) {
-      return NextResponse.json({ error: "Missing authorization code" }, { status: 400 });
+    if (!stored?.refresh_token) {
+      return NextResponse.json({ error: "No refresh token stored" }, { status: 400 });
     }
 
     const res = await fetch("https://api.moloni.pt/v1/grant/", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
-        grant_type: "authorization_code",
+        grant_type: "refresh_token",
         client_id: process.env.MOLONI_CLIENT_ID!,
         client_secret: process.env.MOLONI_CLIENT_SECRET!,
-        code,
-        redirect_uri: process.env.MOLONI_REDIRECT_URI!, // tem de ser exatamente igual ao configurado no Moloni
+        refresh_token: stored.refresh_token,
       }),
     });
 
     if (!res.ok) {
       const text = await res.text();
-      return NextResponse.json(
-        { error: "Failed to exchange code", details: text },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Failed to refresh token", details: text }, { status: 400 });
     }
 
     const tokens = await res.json();
 
     await db.collection("moloni").doc("tokens").set({
       access_token: tokens.access_token,
-      refresh_token: tokens.refresh_token,
+      refresh_token: tokens.refresh_token ?? stored.refresh_token,
       expires_at: Date.now() + tokens.expires_in * 1000,
     });
 
