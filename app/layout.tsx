@@ -22,6 +22,10 @@ export const metadata: Metadata = {
     type: "website",
   },
   twitter: { card: "summary_large_image" },
+  metadataBase: new URL('https://costuraaporta.pt'),
+  alternates: {
+    canonical: '/',
+  },
 };
 
 export const viewport = {
@@ -38,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt">
+    <html lang="pt-PT">
       <head>
         {/* Consent Mode v2 defaults: negar analytics/ads até o utilizador decidir */}
         <Script id="cm-defaults" strategy="beforeInteractive">
