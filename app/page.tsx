@@ -5,6 +5,7 @@ import IconCardComponent from "./components/IconCardComponent";
 import Testimonials from "./components/Testimonials";
 import * as BsIcons from 'react-icons/bs';
 
+
 type Benefit = {
   icon: keyof typeof BsIcons;
   title: string;
@@ -292,7 +293,43 @@ export default function Home() {
         </div>
         <div>
             <hr className="text-white/20 py-3" />
-            <p className="text-white/60 text-sm text-center">© 2025 Costura à Porta. Todos os direitos reservados.</p>
+
+            <div className="flex flex-col md:flex-row justify-between md:items-center gap-6">
+              <div className="flex flex-col md:flex-row justify-center gap-6 text-sm text-primary-foreground/80">
+                <a href="/privacy-policy" className="hover:text-brand-warm transition-colors">
+                  Política de Privacidade
+                </a>
+                <a href="/terms-of-service" className="hover:text-brand-warm transition-colors">
+                  Condições Gerais de Venda
+                </a>
+                 <a href="/terms-of-service#politica-reembolso" className="hover:text-brand-warm transition-colors">
+                  Reembolsos, Trocas e Devoluções
+                </a>
+                <a href="/faq" className="hover:text-brand-warm transition-colors">
+                  FAQ
+                </a>
+              </div>
+              
+              <a 
+                href="https://www.livroreclamacoes.pt" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity"
+                aria-label="Livro de Reclamações Online"
+              >
+                <Image 
+                  src="/logo_LRE_azul positivo.png" 
+                  alt="Livro de Reclamações Online" 
+                  className="h-12 w-auto"
+                  width={115}
+                  height={30}
+                />
+              </a>
+            </div>
+
+            <hr className="text-white/20 py-3 my-3" />
+
+            <p className="text-white/60 text-sm text-center mt-4">© 2025 Costura à Porta. Todos os direitos reservados.</p>
           </div>
       </footer>
     </>
