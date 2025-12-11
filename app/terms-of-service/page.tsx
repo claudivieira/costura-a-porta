@@ -269,7 +269,7 @@ export default async function TermsOfService() {
                 </div>
 
                 <p className="my-4">
-                    <em>Consulte também a <a href="/privacy-policy" className="underline cursor-pointer">Política de Privacidade</a> ou a <a href="/cookies-policy" className="underline cursor-pointer">Política de Cookies</a>.</em>
+                    <em>Consulte também a nossas <a href="/privacy-policy" className="underline cursor-pointer">Política de Privacidade</a>.</em>
                 </p>
                 
             </div>
