@@ -129,7 +129,7 @@ export default async function PrivacyPolicy() {
                     </p>
                 </div>
 
-                <div className="mb-2">
+                <div className="mt-8 mb-2">
                     <h1 className="font-bold">Política de Cookies</h1>
 
                     <div className="m-8 text-base">
