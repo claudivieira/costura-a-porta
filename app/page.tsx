@@ -4,6 +4,7 @@ import { BsExclamationCircle, BsCheck2Circle, BsStars, BsTelephone, BsEnvelope, 
 import IconCardComponent from "./components/IconCardComponent";
 import Testimonials from "./components/Testimonials";
 import * as BsIcons from 'react-icons/bs';
+import OnlineShopBtn from "./components/OnlineShopBtn";
 
 
 type Benefit = {
@@ -104,7 +105,11 @@ export default function Home() {
                   priority
                 />
             </div>
-              <RequestService extraStyles="border-primary text-primary text-sm" placement='header' />
+            <div className="flex gap-2">
+              <OnlineShopBtn extraStyles="border-secondary bg-secondary text-white text-sm hover:bg-primary hover:border-primary" placement='header' />
+              <RequestService extraStyles="border-primary text-primary text-sm hover:bg-primary hover:text-white" placement='header' />
+            </div>
+              
           </div>
         </div>
       </header>
