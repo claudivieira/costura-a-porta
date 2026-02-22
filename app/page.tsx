@@ -93,9 +93,9 @@ export default function Home() {
   return (
     <>
       <header>
-        <div className="mx-auto px-6 lg:px-8 bg-white">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+        <div className="w-full mx-auto px-6 lg:px-8 bg-white">
+          <div className="flex flex-col md:flex-row items-center md:justify-between">
+            <div className="flex flex-col md:flex-row items-center gap-3">
               <Image
                   className="items-left h-16 w-auto"
                   src="/logo_deitado_azul_sem-fundo.png"
@@ -105,7 +105,7 @@ export default function Home() {
                   priority
                 />
             </div>
-            <div className="flex gap-2">
+            <div className="mx-auto mt-2 md:mt-0 flex flex-col md:flex-row gap-2">
               <OnlineShopBtn extraStyles="border-secondary bg-secondary text-white text-sm hover:bg-primary hover:border-primary" placement='header' />
               <RequestService extraStyles="border-primary text-primary text-sm hover:bg-primary hover:text-white" placement='header' />
             </div>
